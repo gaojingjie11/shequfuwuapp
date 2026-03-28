@@ -1,0 +1,100 @@
+
+/* pages/home/index.wxss */
+.home-page {
+  min-height: 100vh;
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+  background: #f5f7fb;
+}
+.banner {
+  background: linear-gradient(135deg, #00b894 0%, #0984e3 100%);
+  color: #fff;
+  padding: 1.75rem 0;
+  margin-bottom: 0.75rem;
+  position: relative;
+  overflow: hidden;
+  border-bottom-left-radius: 0.875rem;
+  border-bottom-right-radius: 0.875rem;
+}
+.banner::after {
+  content: '';
+  position: absolute;
+  right: -2.5rem;
+  top: -2.8125rem;
+  width: 8.75rem;
+  height: 8.75rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+}
+.banner-title {
+  font-size: 1.6875rem;
+  font-weight: 700;
+  margin-bottom: 0.3125rem;
+  text-align: center;
+  letter-spacing: 0.0625rem;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0.0625rem 0.25rem rgba(0, 0, 0, 0.12);
+}
+.banner-subtitle {
+  font-size: 0.875rem;
+  text-align: center;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+.container {
+  padding: 0 0.75rem;
+}
+.quick-menu {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.625rem;
+  margin-bottom: 0.875rem;
+}
+.quick-item {
+  background: #fff;
+  border-radius: 0.6875rem;
+  min-height: 6.625rem;
+  padding: 0.875rem 0.5rem;
+  text-align: center;
+  box-shadow: 0 0.3125rem 0.875rem rgba(0, 0, 0, 0.05);
+}
+.quick-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.4375rem;
+}
+.quick-text {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: #2d3436;
+  line-height: 1.35;
+}
+.section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  padding-left: 0.4375rem;
+  border-left: 0.25rem solid #00b894;
+}
+.notice-list {
+  display: flex;
+  flex-direction: column;
+}
+.notice-item {
+  padding: 0.75rem;
+  border-radius: 0.625rem;
+  margin-bottom: 0.4375rem;
+}
+.notice-title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.3125rem;
+  color: #2d3436;
+}
+.notice-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #636e72;
+}
+

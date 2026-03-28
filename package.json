@@ -1,0 +1,9 @@
+{
+  "name": "shequ-android-uniapp",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "uni -p app",
+    "build": "uni build -p app"
+  }
+}

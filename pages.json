@@ -1,0 +1,150 @@
+{
+  "pages": [
+    {
+      "path": "pages/home/index",
+      "style": {}
+    },
+    {
+      "path": "pages/mall/index",
+      "style": {}
+    },
+    {
+      "path": "pages/mall/detail",
+      "style": {}
+    },
+    {
+      "path": "pages/mall/cart",
+      "style": {}
+    },
+    {
+      "path": "pages/service/index",
+      "style": {}
+    },
+    {
+      "path": "pages/service/community-chat",
+      "style": {
+        "navigationBarTitleText": "\u793e\u533a\u7fa4\u804a",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/service/notice",
+      "style": {}
+    },
+    {
+      "path": "pages/service/repair",
+      "style": {}
+    },
+    {
+      "path": "pages/service/visitor",
+      "style": {
+        "navigationBarTitleText": "\u8bbf\u5ba2\u767b\u8bb0"
+      }
+    },
+    {
+      "path": "pages/service/parking",
+      "style": {
+        "navigationBarTitleText": "\u8f66\u4f4d\u7ba1\u7406"
+      }
+    },
+    {
+      "path": "pages/service/property",
+      "style": {
+        "navigationBarTitleText": "\u7269\u4e1a\u8d39\u7f34\u7eb3"
+      }
+    },
+    {
+      "path": "pages/service/green-points",
+      "style": {
+        "navigationBarTitleText": "\u7eff\u8272\u79ef\u5206\u4e2d\u5fc3"
+      }
+    },
+    {
+      "path": "pages/chat/index",
+      "style": {
+        "navigationBarTitleText": "AI \u5bf9\u8bdd\u52a9\u624b"
+      }
+    },
+    {
+      "path": "pages/order/list",
+      "style": {}
+    },
+    {
+      "path": "pages/order/detail",
+      "style": {}
+    },
+    {
+      "path": "pages/order/create",
+      "style": {}
+    },
+    {
+      "path": "pages/user/index",
+      "style": {}
+    },
+    {
+      "path": "pages/auth/login",
+      "style": {}
+    },
+    {
+      "path": "pages/auth/register",
+      "style": {}
+    },
+    {
+      "path": "pages/user/favorites",
+      "style": {
+        "navigationBarTitleText": "\u6211\u7684\u6536\u85cf",
+        "usingComponents": {}
+      }
+    },
+    {
+      "path": "pages/admin/ai-report/index",
+      "style": {
+        "navigationBarTitleText": "AI\u62a5\u8868"
+      }
+    },
+    {
+      "path": "pages/admin/ai-report/detail",
+      "style": {
+        "navigationBarTitleText": "\u62a5\u8868\u8be6\u60c5"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "\u667a\u6167\u793e\u533a",
+    "navigationBarBackgroundColor": "#fff",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#409EFF",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "\u9996\u9875",
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/home-active.png"
+      },
+      {
+        "pagePath": "pages/mall/index",
+        "text": "\u5546\u57ce",
+        "iconPath": "static/tabbar/mall.png",
+        "selectedIconPath": "static/tabbar/mall-active.png"
+      },
+      {
+        "pagePath": "pages/service/index",
+        "text": "\u670d\u52a1",
+        "iconPath": "static/tabbar/service.png",
+        "selectedIconPath": "static/tabbar/service-active.png"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text": "\u6211\u7684",
+        "iconPath": "static/tabbar/user.png",
+        "selectedIconPath": "static/tabbar/user-active.png"
+      }
+    ]
+  }
+}

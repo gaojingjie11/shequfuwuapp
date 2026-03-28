@@ -1,0 +1,52 @@
+
+/* pages/service/notice.wxss */
+.notice-page {
+  min-height: 100vh;
+  background: #f7f8fa;
+  padding: 1rem;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+}
+.notice-card {
+  background: #fff;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+.notice-header {
+  margin-bottom: 0.75rem;
+}
+.notice-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+.notice-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #999;
+}
+.publisher {
+  color: #00b894;
+  font-weight: 500;
+}
+.notice-content {
+  font-size: 0.875rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+.notice-footer {
+  padding-top: 0.75rem;
+  border-top: 0.0625rem solid #f0f0f0;
+  font-size: 0.75rem;
+  color: #999;
+}
+.loading-text, .no-more, .empty-state {
+  text-align: center;
+  padding: 1.25rem;
+  color: #999;
+  font-size: 0.75rem;
+}
+

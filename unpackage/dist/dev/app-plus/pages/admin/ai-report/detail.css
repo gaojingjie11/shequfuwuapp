@@ -1,0 +1,48 @@
+
+.page {
+  min-height: 100vh;
+  background: #f7f8fa;
+  padding: 1rem;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+}
+.meta {
+  margin-bottom: 0.75rem;
+}
+.meta-row {
+  display: flex;
+  padding: 0.5rem 0;
+  border-bottom: 0.0625rem solid #f1f1f1;
+  font-size: 0.875rem;
+}
+.meta-row:last-child {
+  border-bottom: none;
+}
+.label {
+  width: 6rem;
+  color: #666;
+}
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.625rem;
+}
+.report-rich {
+  display: block;
+}
+.fallback-wrap {
+  margin-top: 0.625rem;
+}
+.report-text {
+  color: #333;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.state-tip {
+  text-align: center;
+  color: #999;
+  font-size: 0.8125rem;
+  padding: 1.25rem 0;
+}
+

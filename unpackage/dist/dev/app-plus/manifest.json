@@ -1,0 +1,150 @@
+{
+  "@platforms": [
+    "android",
+    "iPhone",
+    "iPad"
+  ],
+  "id": "__UNI__036BB94",
+  "name": "社区服务",
+  "version": {
+    "name": "1.0.1",
+    "code": 1
+  },
+  "description": "由微信小程序迁移的 uni-app 安卓应用",
+  "developer": {
+    "name": "",
+    "email": "",
+    "url": ""
+  },
+  "permissions": {
+    "UniNView": {
+      "description": "UniNView原生渲染"
+    }
+  },
+  "plus": {
+    "useragent": {
+      "value": "uni-app",
+      "concatenate": true
+    },
+    "splashscreen": {
+      "target": "id:1",
+      "autoclose": true,
+      "waiting": true,
+      "delay": 0
+    },
+    "popGesture": "close",
+    "launchwebview": {
+      "id": "1",
+      "kernel": "WKWebview"
+    },
+    "usingComponents": true,
+    "nvueStyleCompiler": "uni-app",
+    "compilerVersion": 3,
+    "distribute": {
+      "google": {
+        "permissions": [
+          "<uses-permission android:name=\"android.permission.INTERNET\"/>",
+          "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+          "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+          "<uses-permission android:name=\"android.permission.READ_MEDIA_IMAGES\"/>",
+          "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+          "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\"/>"
+        ]
+      },
+      "apple": {
+        "dSYMs": false
+      },
+      "plugins": {
+        "audio": {
+          "mp3": {
+            "description": "Android平台录音支持MP3格式文件"
+          }
+        }
+      }
+    },
+    "statusbar": {
+      "immersed": "supportedDevice",
+      "style": "dark",
+      "background": "#fff"
+    },
+    "allowsInlineMediaPlayback": true,
+    "safearea": {
+      "background": "#ffffff",
+      "bottom": {
+        "offset": "auto"
+      }
+    },
+    "uni-app": {
+      "control": "uni-v3",
+      "vueVersion": "3",
+      "compilerVersion": "5.05",
+      "nvueCompiler": "uni-app",
+      "renderer": "auto",
+      "nvue": {
+        "flex-direction": "column"
+      },
+      "nvueLaunchMode": "normal",
+      "webView": {
+        "minUserAgentVersion": "49.0"
+      }
+    },
+    "tabBar": {
+      "position": "bottom",
+      "color": "#999999",
+      "selectedColor": "#409EFF",
+      "borderStyle": "rgba(0,0,0,0.4)",
+      "blurEffect": "none",
+      "fontSize": "10px",
+      "iconWidth": "24px",
+      "spacing": "3px",
+      "height": "50px",
+      "list": [
+        {
+          "pagePath": "pages/home/index",
+          "text": "首页",
+          "iconPath": "/static/tabbar/home.png",
+          "selectedIconPath": "/static/tabbar/home-active.png"
+        },
+        {
+          "pagePath": "pages/mall/index",
+          "text": "商城",
+          "iconPath": "/static/tabbar/mall.png",
+          "selectedIconPath": "/static/tabbar/mall-active.png"
+        },
+        {
+          "pagePath": "pages/service/index",
+          "text": "服务",
+          "iconPath": "/static/tabbar/service.png",
+          "selectedIconPath": "/static/tabbar/service-active.png"
+        },
+        {
+          "pagePath": "pages/user/index",
+          "text": "我的",
+          "iconPath": "/static/tabbar/user.png",
+          "selectedIconPath": "/static/tabbar/user-active.png"
+        }
+      ],
+      "backgroundColor": "#ffffff",
+      "selectedIndex": 0,
+      "shown": true,
+      "child": [
+        "lauchwebview"
+      ],
+      "selected": 0
+    }
+  },
+  "app-harmony": {
+    "useragent": {
+      "value": "uni-app",
+      "concatenate": true
+    },
+    "safearea": {
+      "background": "#ffffff",
+      "bottom": {
+        "offset": "auto"
+      }
+    }
+  },
+  "locale": "zh-Hans",
+  "launch_path": "__uniappview.html"
+}

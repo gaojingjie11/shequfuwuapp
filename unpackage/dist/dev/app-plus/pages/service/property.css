@@ -1,0 +1,104 @@
+
+.container {
+  min-height: 100vh;
+  background: #f7f8fa;
+  padding: 0.625rem;
+  padding-bottom: calc(0.625rem + env(safe-area-inset-bottom));
+}
+.mix-pay-tip {
+  margin-bottom: 0.625rem;
+  background: #f6ffed;
+  border: 0.03125rem solid #b7eb8f;
+}
+.tip-title {
+  color: #389e0d;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.tip-desc {
+  color: #5b8c00;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+.tabs {
+  display: flex;
+  background: #fff;
+  border-radius: 0.375rem;
+  margin-bottom: 0.625rem;
+  overflow: hidden;
+}
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 0.75rem 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+.tab-item.active {
+  color: #fff;
+  background: #409eff;
+  font-weight: bold;
+}
+.fee-card {
+  padding: 0.9375rem;
+  margin-bottom: 0.625rem;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.625rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 0.03125rem dashed #eee;
+}
+.title {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.amount {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #f56c6c;
+}
+.row {
+  display: flex;
+  margin-bottom: 0.3125rem;
+  font-size: 0.875rem;
+}
+.label {
+  color: #666;
+  width: 5.3125rem;
+}
+.val {
+  color: #333;
+}
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 0.625rem;
+  padding-top: 0.625rem;
+  border-top: 0.03125rem solid #f5f5f5;
+}
+.pay-btn {
+  margin: 0;
+}
+.status-tag {
+  font-size: 0.75rem;
+  color: #67c23a;
+  background: #f0f9eb;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+}
+.empty-state {
+  text-align: center;
+  padding-top: 3.125rem;
+  color: #999;
+}
+.empty-icon {
+  width: 6.25rem;
+  opacity: 0.5;
+  margin-bottom: 0.625rem;
+}
+

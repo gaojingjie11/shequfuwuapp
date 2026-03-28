@@ -1,0 +1,81 @@
+
+.container {
+  min-height: 100vh;
+  background: #f7f8fa;
+  padding: 0.625rem;
+  padding-bottom: calc(0.625rem + env(safe-area-inset-bottom));
+}
+.tabs {
+  display: flex;
+  background: #fff;
+  border-radius: 0.375rem;
+  margin-bottom: 0.625rem;
+  overflow: hidden;
+}
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 0.75rem 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+.tab-item.active {
+  color: #fff;
+  background: #409EFF;
+  font-weight: bold;
+}
+.form-card {
+  padding: 0.9375rem;
+}
+.form-item {
+  margin-bottom: 0.9375rem;
+}
+.label {
+  display: block;
+  font-size: 0.875rem;
+  color: #333;
+  margin-bottom: 0.375rem;
+}
+.input {
+  border: 0.03125rem solid #ddd;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+}
+.submit-btn {
+  margin-top: 1.25rem;
+  width: 100%;
+}
+.history-item {
+  padding: 0.75rem;
+  margin-bottom: 0.625rem;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.3125rem;
+}
+.name {
+  font-size: 0.9375rem;
+  font-weight: bold;
+}
+.sub {
+  font-size: 0.75rem;
+  color: #666;
+}
+.reason {
+  font-size: 0.8125rem;
+  color: #333;
+  margin-top: 0.3125rem;
+  padding-top: 0.3125rem;
+  border-top: 0.03125rem dashed #eee;
+}
+.empty-text {
+  text-align: center;
+  color: #999;
+  margin-top: 1.5625rem;
+}
+.refresh-btn {
+    margin-bottom: 0.625rem;
+}
+

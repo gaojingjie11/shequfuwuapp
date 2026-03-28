@@ -1,0 +1,47 @@
+<template>
+<view class="login-page">
+  <view class="login-container">
+    <view class="card login-card">
+      <view class="login-title">创建账号</view>
+      <view class="login-subtitle">加入智慧社区</view>
+
+      <view class="login-form">
+        <view class="form-group">
+          <text class="label">手机号</text>
+          <input class="input" type="number" placeholder="请输入手机号" @input="onInput" data-field="mobile" />
+        </view>
+        
+        <view class="form-group">
+          <text class="label">真实姓名</text>
+          <input class="input" type="text" placeholder="请输入真实姓名" @input="onInput" data-field="real_name" />
+        </view>
+
+        <view class="form-group">
+          <text class="label">密码</text>
+          <input class="input" type="password" placeholder="请输入密码（至少6位）" @input="onInput" data-field="password" maxlength="20" />
+        </view>
+
+        <view class="form-footer">
+          <text class="link" @tap="goToLogin">已有账号？登录</text>
+        </view>
+
+        <button class="btn btn-primary btn-lg mt-md" @tap="handleRegister" :loading="loading">注册</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+</template>
+
+<script>
+import { createPage } from '@/common/page-compat.js';
+import pageDef from './register.page.js';
+
+export default createPage(pageDef);
+</script>
+
+<style>
+/* Reuse login styles */
+@import "./login.wxss";
+
+</style>
