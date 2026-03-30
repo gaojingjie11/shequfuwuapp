@@ -1,8 +1,8 @@
 <template>
-<view class="container">
+<view class="container page-shell">
   <view class="mix-pay-tip card" v-if="userInfo">
     <view class="tip-title">当前绿色积分 {{userInfo.green_points || 0}}，账户余额 ￥{{userBalanceText}}</view>
-    <view class="tip-desc">支付时将按 {{greenPointsPerYuan}} 积分 = 1 元 自动优先扣除积分，不足部分再扣余额。</view>
+    <view class="tip-desc">支付时将按 {{greenPointsPerYuan}} 积分 = 1 元，自动优先扣除积分，不足部分再扣余额。</view>
   </view>
 
   <view class="tabs">
@@ -11,7 +11,7 @@
   </view>
 
   <view class="list">
-    <template v-for="(item, index) in list" :key="item.id">
+    <template v-for="item in list" :key="item.id">
       <view class="fee-card card">
         <view class="header">
           <text class="title">{{item.title || '物业费账单'}}</text>
@@ -60,7 +60,6 @@
     </view>
   </view>
 </view>
-
 </template>
 
 <script>
@@ -73,55 +72,59 @@ export default createPage(pageDef);
 <style>
 .container {
   min-height: 100vh;
-  background: #f7f8fa;
-  padding: 20rpx;
-  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  padding: 24rpx;
+  background: var(--bg-page);
 }
 
 .mix-pay-tip {
-  margin-bottom: 20rpx;
-  background: #f6ffed;
-  border: 1rpx solid #b7eb8f;
+  margin-bottom: 24rpx;
+  background: #eef8ef;
+  border: 2rpx solid #cde8d1;
 }
 
 .tip-title {
-  color: #389e0d;
-  font-size: 26rpx;
-  font-weight: 600;
-  margin-bottom: 8rpx;
+  color: #227b58;
+  font-size: 28rpx;
+  font-weight: 700;
+  margin-bottom: 12rpx;
 }
 
 .tip-desc {
-  color: #5b8c00;
+  color: #3d7d61;
   font-size: 24rpx;
   line-height: 1.6;
 }
 
 .tabs {
   display: flex;
-  background: #fff;
-  border-radius: 12rpx;
-  margin-bottom: 20rpx;
-  overflow: hidden;
+  gap: 16rpx;
+  margin-bottom: 24rpx;
 }
 
 .tab-item {
   flex: 1;
   text-align: center;
-  padding: 24rpx 0;
-  font-size: 28rpx;
-  color: #666;
+  padding: 16rpx 0;
+  font-size: 26rpx;
+  border-radius: 999rpx;
+  color: var(--text-secondary);
+  background: #e9eff6;
 }
 
 .tab-item.active {
   color: #fff;
-  background: #409eff;
-  font-weight: bold;
+  background: var(--primary-color);
+  font-weight: 600;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
 }
 
 .fee-card {
-  padding: 30rpx;
-  margin-bottom: 20rpx;
+  margin-bottom: 0;
 }
 
 .header {
@@ -130,33 +133,34 @@ export default createPage(pageDef);
   align-items: center;
   margin-bottom: 20rpx;
   padding-bottom: 20rpx;
-  border-bottom: 1rpx dashed #eee;
+  border-bottom: 2rpx dashed var(--border-color);
 }
 
 .title {
   font-size: 32rpx;
-  font-weight: bold;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .amount {
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #f56c6c;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #c74545;
 }
 
 .row {
   display: flex;
-  margin-bottom: 10rpx;
-  font-size: 28rpx;
+  margin-bottom: 12rpx;
+  font-size: 26rpx;
 }
 
 .label {
-  color: #666;
-  width: 170rpx;
+  color: var(--text-secondary);
+  width: 184rpx;
 }
 
 .val {
-  color: #333;
+  color: var(--text-primary);
 }
 
 .footer {
@@ -165,31 +169,39 @@ export default createPage(pageDef);
   align-items: center;
   margin-top: 20rpx;
   padding-top: 20rpx;
-  border-top: 1rpx solid #f5f5f5;
+  border-top: 2rpx solid var(--border-color);
 }
 
 .pay-btn {
   margin: 0;
+  min-height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 999rpx;
+  padding: 0 24rpx;
+  background: var(--primary-color) !important;
+}
+
+.pay-btn::after {
+  border: none;
 }
 
 .status-tag {
-  font-size: 24rpx;
-  color: #67c23a;
-  background: #f0f9eb;
-  padding: 4rpx 12rpx;
-  border-radius: 8rpx;
+  font-size: 22rpx;
+  color: #1f9d72;
+  background: #e9f8f2;
+  padding: 6rpx 18rpx;
+  border-radius: 999rpx;
 }
 
 .empty-state {
   text-align: center;
-  padding-top: 100rpx;
-  color: #999;
+  padding-top: 120rpx;
+  color: var(--text-tertiary);
 }
 
 .empty-icon {
-  width: 200rpx;
-  opacity: 0.5;
+  width: 180rpx;
+  opacity: 0.65;
   margin-bottom: 20rpx;
 }
-
 </style>

@@ -1,5 +1,5 @@
 <template>
-<view class="order-page">
+<view class="order-page page-shell">
   <view class="mix-pay-tip card" v-if="userInfo">
     <view class="tip-title">混合支付已启用（{{greenPointsPerYuan}} 积分 = 1 元）</view>
     <view class="tip-desc">系统会优先扣除绿色积分，不足部分再扣除余额。</view>
@@ -7,7 +7,7 @@
   </view>
 
   <view class="tabs">
-    <template v-for="(item, index) in tabs" :key="item.status">
+    <template v-for="item in tabs" :key="item.status">
       <view :class="'tab-item ' + (currentTabStatus === item.status ? 'active' : '')" @tap="switchTab" :data-status="item.status">
         {{item.name}}
       </view>
@@ -15,7 +15,7 @@
   </view>
 
   <view class="order-list">
-    <template v-for="(item, index) in orders" :key="item.id">
+    <template v-for="item in orders" :key="item.id">
       <view class="order-card card" @tap="goToDetail" :data-id="item.id">
         <view class="order-header">
           <text class="order-no">单号: {{item.order_no}}</text>
@@ -25,7 +25,7 @@
         </view>
 
         <view class="order-body">
-          <template v-for="(prod, index) in item.items" :key="prod.id">
+          <template v-for="prod in item.items" :key="prod.id">
             <view class="prod-row">
               <image class="prod-img" :src="prod.product.image_url || '/assets/icons/mall.png'" mode="aspectFill"></image>
               <view class="prod-info">
@@ -45,7 +45,7 @@
         </view>
 
         <view class="order-footer">
-          <view class="total-row">共{{item.items.length}}件商品</view>
+          <view class="total-row">共 {{item.items.length}} 件商品</view>
           <view class="action-row">
             <button class="btn-mini btn-danger" v-if="item.status === 0" @tap.stop="payOrder" :data-id="item.id">立即支付</button>
             <button class="btn-mini" v-if="item.status === 0" @tap.stop="cancelOrder" :data-id="item.id">取消</button>
@@ -57,7 +57,6 @@
     <view v-if="!loading && orders.length === 0" class="empty-state">暂无订单</view>
   </view>
 </view>
-
 </template>
 
 <script>
@@ -70,90 +69,104 @@ export default createPage(pageDef);
 <style>
 .order-page {
   min-height: 100vh;
-  background: #f7f8fa;
-  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+  background: var(--bg-page);
+  padding-bottom: 16rpx;
 }
 
 .mix-pay-tip {
-  margin: 32rpx;
-  background: #f6ffed;
-  border: 2rpx solid #b7eb8f;
+  margin: 24rpx;
+  background: #eef8ef;
+  border: 2rpx solid #cde8d1;
 }
 
 .tip-title {
   font-size: 28rpx;
-  color: #389e0d;
-  font-weight: 600;
+  color: #227b58;
+  font-weight: 700;
   margin-bottom: 12rpx;
 }
 
 .tip-desc {
-  color: #5b8c00;
+  color: #3d7d61;
   font-size: 24rpx;
   line-height: 1.6;
 }
 
 .tabs {
   display: flex;
-  background: #fff;
-  border-bottom: 2rpx solid #eee;
+  gap: 16rpx;
+  padding: 0 24rpx 20rpx;
   position: sticky;
   top: 0;
   z-index: 10;
+  background: var(--bg-page);
 }
 
 .tab-item {
   flex: 1;
   text-align: center;
-  padding: 24rpx 0;
-  font-size: 28rpx;
-  color: #666;
-  border-bottom: 4rpx solid transparent;
+  padding: 14rpx 0;
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  border-radius: 999rpx;
+  background: #e9eff6;
 }
 
 .tab-item.active {
-  color: #00b894;
+  color: #fff;
+  background: var(--primary-color);
   font-weight: 600;
-  border-bottom-color: #00b894;
 }
 
 .order-list {
-  padding: 32rpx;
-  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+  padding: 0 24rpx 28rpx;
 }
 
 .order-card {
-  background: #fff;
-  border-radius: 24rpx;
-  padding: 32rpx;
-  margin-bottom: 32rpx;
+  margin-bottom: 24rpx;
+  border-radius: 28rpx;
 }
 
 .order-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 24rpx;
+  margin-bottom: 20rpx;
   font-size: 24rpx;
-  border-bottom: 2rpx solid #f0f0f0;
+  border-bottom: 2rpx solid var(--border-color);
   padding-bottom: 16rpx;
 }
 
-.order-no { color: #666; }
-.order-status { font-weight: 600; }
-.text-success { color: #52c41a; }
-.text-warning { color: #faad14; }
+.order-no {
+  color: var(--text-secondary);
+}
+
+.order-status {
+  font-weight: 700;
+}
+
+.text-success {
+  color: #1f9d72;
+}
+
+.text-warning {
+  color: #c47b00;
+}
 
 .prod-row {
   display: flex;
-  margin-bottom: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.prod-row:last-child {
+  margin-bottom: 0;
 }
 
 .prod-img {
   width: 120rpx;
   height: 120rpx;
-  border-radius: 8rpx;
-  background: #eee;
-  margin-right: 24rpx;
+  border-radius: 16rpx;
+  background: #e8eef5;
+  margin-right: 20rpx;
 }
 
 .prod-info {
@@ -162,65 +175,74 @@ export default createPage(pageDef);
 
 .prod-name {
   font-size: 28rpx;
+  color: var(--text-primary);
   margin-bottom: 8rpx;
 }
 
 .prod-meta {
-  color: #999;
+  color: var(--text-secondary);
   font-size: 24rpx;
 }
 
 .payment-info {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24rpx;
-  color: #666;
+  margin-top: 20rpx;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12rpx 16rpx;
+  color: var(--text-secondary);
   font-size: 24rpx;
-  margin-bottom: 24rpx;
 }
 
 .order-footer {
-  border-top: 2rpx solid #f0f0f0;
-  padding-top: 24rpx;
+  margin-top: 20rpx;
+  border-top: 2rpx solid var(--border-color);
+  padding-top: 20rpx;
 }
 
 .total-row {
   text-align: right;
-  font-size: 28rpx;
-  margin-bottom: 24rpx;
-  color: #333;
+  font-size: 26rpx;
+  margin-bottom: 20rpx;
+  color: var(--text-primary);
 }
 
 .action-row {
   display: flex;
   justify-content: flex-end;
-  gap: 20rpx;
+  gap: 16rpx;
 }
 
 .btn-mini {
   margin: 0;
+  min-height: 60rpx;
+  line-height: 60rpx;
   font-size: 24rpx;
-  padding: 8rpx 24rpx;
-  border-radius: 28rpx;
+  padding: 0 24rpx;
+  border-radius: 999rpx;
   background: #fff;
-  border: 2rpx solid #ddd;
-  color: #666;
+  border: 2rpx solid var(--border-strong);
+  color: var(--text-secondary);
+}
+
+.btn-mini::after {
+  border: none;
 }
 
 .btn-danger {
-  color: #ff4d4f;
-  border-color: #ff4d4f;
+  color: var(--danger-color);
+  border-color: #f2c2c2;
+  background: #fff3f3;
 }
 
 .btn-primary {
-  color: #00b894;
-  border-color: #00b894;
+  color: var(--primary-color);
+  border-color: #b7d1e8;
+  background: #edf5fd;
 }
 
 .empty-state {
   text-align: center;
-  padding-top: 100rpx;
-  color: #999;
+  padding: 96rpx 0 44rpx;
+  color: var(--text-tertiary);
 }
-
 </style>

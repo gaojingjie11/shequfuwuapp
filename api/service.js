@@ -1,8 +1,6 @@
 import request from '../utils/request';
 
-
 export default {
-    // 获取公告列表
     getNoticeList(params, options = {}) {
         return request({
             url: '/notices',
@@ -12,7 +10,6 @@ export default {
         });
     },
 
-    // 获取公告详情
     getNoticeDetail(id) {
         return request({
             url: `/notice/${id}`,
@@ -20,7 +17,6 @@ export default {
         });
     },
 
-    // 标记公告已读
     readNotice(id) {
         return request({
             url: `/notice/read/${id}`,
@@ -28,7 +24,6 @@ export default {
         });
     },
 
-    // 创建报修
     createRepair(data) {
         return request({
             url: '/repair/create',
@@ -37,7 +32,6 @@ export default {
         });
     },
 
-    // 获取报修列表
     getRepairList(params) {
         return request({
             url: '/repair/list',
@@ -46,7 +40,6 @@ export default {
         });
     },
 
-    // 创建访客登记
     createVisitor(data) {
         return request({
             url: '/visitor/create',
@@ -55,7 +48,6 @@ export default {
         });
     },
 
-    // 获取访客列表
     getVisitorList(params) {
         return request({
             url: '/visitor/list',
@@ -64,7 +56,6 @@ export default {
         });
     },
 
-    // 获取我的车位
     getMyParking() {
         return request({
             url: '/parking/my',
@@ -72,7 +63,6 @@ export default {
         });
     },
 
-    // 绑定车牌
     bindCar(data) {
         return request({
             url: '/parking/bind',
@@ -81,7 +71,6 @@ export default {
         });
     },
 
-    // 获取物业费列表
     getPropertyFeeList(params) {
         return request({
             url: '/property/list',
@@ -90,20 +79,21 @@ export default {
         });
     },
 
-    // 缴纳物业费
     payPropertyFee(data) {
+        const businessId = data.business_id || data.related_id || data.id;
         return request({
             url: '/finance/pay',
             method: 'POST',
             data: {
-                business_id: data.related_id,
-                pay_type: 2,
-                password: data.password || ''
+                business_id: businessId,
+                business_type: data.business_type || 2,
+                pay_type: data.pay_type || 'password',
+                password: data.password || '',
+                face_image_url: data.face_image_url || ''
             }
         });
     },
 
-    // 获取门店列表
     getStoreList() {
         return request({
             url: '/stores',

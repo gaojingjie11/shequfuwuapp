@@ -1,8 +1,21 @@
 import __dep1 from '../../api/greenPoints';
 import __dep2 from '../../api/user';
+import __dep3 from '../../utils/media';
 
-const { uploadGarbageImage, getGreenPointsLeaderboard } = __dep1;
+const { uploadGarbageImage, getGreenPointsLeaderboard, normalizeGreenPointsUploadError } = __dep1;
 const { getUserInfo } = __dep2;
+const { chooseSingleImage, isPermissionDeniedError, isUserCancelError } = __dep3;
+
+function getRecognitionErrorMessage(error) {
+    if (error && error.userMessage) {
+        return error.userMessage;
+    }
+
+    return normalizeGreenPointsUploadError(
+        error && (error.rawMessage || error.message || error.errMsg),
+        '识别失败，请稍后重试'
+    );
+}
 
 export default {
     data: {
@@ -11,7 +24,8 @@ export default {
         uploading: false,
         leaderboard: [],
         loadingLeaderboard: false,
-        recognitionResult: null
+        recognitionResult: null,
+        recognitionError: ''
     },
 
     onShow() {
@@ -48,24 +62,27 @@ export default {
     },
 
     chooseImage() {
-        uni.chooseImage({
-            count: 1,
+        chooseSingleImage({
             sourceType: ['album', 'camera'],
-            success: (res) => {
-                const filePath = Array.isArray(res.tempFilePaths) ? res.tempFilePaths[0] : '';
+            sizeType: ['compressed']
+        })
+            .then((filePath) => {
                 this.setData({
                     imagePath: filePath || '',
-                    recognitionResult: null
+                    recognitionResult: null,
+                    recognitionError: ''
                 });
-            },
-            fail: (err) => {
+            })
+            .catch((err) => {
+                if (isUserCancelError(err)) return;
                 console.error(err);
                 uni.showToast({
-                    title: '选择图片失败',
+                    title: isPermissionDeniedError(err)
+                        ? '未获得摄像头权限，请在系统设置中开启相机权限'
+                        : '选择图片失败，请稍后重试',
                     icon: 'none'
                 });
-            }
-        });
+            });
     },
 
     async submitImage() {
@@ -75,10 +92,18 @@ export default {
         }
         if (this.data.uploading) return;
 
-        this.setData({ uploading: true });
+        this.setData({
+            uploading: true,
+            recognitionResult: null,
+            recognitionError: ''
+        });
+
         try {
             const res = await uploadGarbageImage(this.data.imagePath);
-            this.setData({ recognitionResult: res || null });
+            this.setData({
+                recognitionResult: res || null,
+                recognitionError: ''
+            });
             uni.showToast({
                 title: `识别成功 +${(res && res.points) || 0}积分`,
                 icon: 'success'
@@ -86,6 +111,15 @@ export default {
             await Promise.all([this.loadUserInfo(), this.loadLeaderboard()]);
         } catch (e) {
             console.error(e);
+            const message = getRecognitionErrorMessage(e);
+            this.setData({
+                recognitionResult: null,
+                recognitionError: message
+            });
+            uni.showToast({
+                title: message,
+                icon: 'none'
+            });
         } finally {
             this.setData({ uploading: false });
         }

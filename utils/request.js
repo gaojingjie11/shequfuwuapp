@@ -8,6 +8,14 @@ const normalizeErrorMessage = (msg, fallback = '请求失败') => {
     return '支付密码错误，请重试';
   }
 
+  if (/payment password is required/i.test(text)) {
+    return '当前支付方式需要支付密码，请改用密码支付或检查后端刷脸支付配置';
+  }
+
+  if (/face image is required/i.test(text)) {
+    return '未获取到人脸图片，请重新拍照上传';
+  }
+
   return text;
 };
 

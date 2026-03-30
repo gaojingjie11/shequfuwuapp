@@ -1,11 +1,10 @@
 <template>
-<view class="container">
+<view class="container page-shell">
   <view class="tabs">
     <view :class="'tab-item ' + (activeTab === 0 ? 'active' : '')" @tap="switchTab" data-index="0">访客登记</view>
     <view :class="'tab-item ' + (activeTab === 1 ? 'active' : '')" @tap="switchTab" data-index="1">访客记录</view>
   </view>
 
-  <!-- Register Form -->
   <view class="tab-content" v-if="activeTab === 0">
     <view class="form-card card">
       <view class="form-item">
@@ -18,42 +17,39 @@
       </view>
       <view class="form-item">
         <text class="label">来访时间</text>
-         <!-- Use simple input for now or picker if needed, simplified for text input due to format variance -->
         <input class="input" placeholder="yyyy-MM-dd HH:mm" @input="onInput" data-field="visit_time" :value="visit_time" />
       </view>
       <view class="form-item">
         <text class="label">来访事由</text>
         <input class="input" placeholder="例如：亲友拜访" @input="onInput" data-field="reason" :value="reason" />
       </view>
-      <button class="submit-btn" type="primary" @tap="handleSubmit">提交登记</button>
+      <button class="submit-btn btn btn-primary" @tap="handleSubmit">提交登记</button>
     </view>
   </view>
 
-  <!-- History List -->
   <view class="tab-content" v-if="activeTab === 1">
     <button class="refresh-btn" size="mini" @tap="getHistory">刷新</button>
     <view class="history-list">
-      <template v-for="(item, index) in historyList" :key="item.id">
+      <template v-for="item in historyList" :key="item.id">
         <view class="history-item card">
-             <view class="row">
-                <text class="name">{{item.visitor_name}}</text>
-                <text :class="'status status-' + (item.status)">{{item.status === 1 ? '已通过' : (item.status === 2 ? '已拒绝' : '待审核')}}</text>
-             </view>
-             <view class="row sub">
-                <text>手机：{{item.visitor_mobile}}</text>
-                <text>时间：{{item.visit_time}}</text>
-             </view>
-             <view class="row sub" v-if="item.plate_number">
-                <text>车牌：{{item.plate_number}}</text>
-             </view>
-             <view class="reason">事由：{{item.reason}}</view>
+          <view class="row">
+            <text class="name">{{item.visitor_name}}</text>
+            <text :class="'status status-' + item.status">{{item.status === 1 ? '已通过' : (item.status === 2 ? '已拒绝' : '待审核')}}</text>
+          </view>
+          <view class="row sub">
+            <text>手机：{{item.visitor_mobile}}</text>
+            <text>时间：{{item.visit_time}}</text>
+          </view>
+          <view class="row sub" v-if="item.plate_number">
+            <text>车牌：{{item.plate_number}}</text>
+          </view>
+          <view class="reason">事由：{{item.reason}}</view>
         </view>
       </template>
-       <view v-if="historyList.length === 0" class="empty-text">暂无记录</view>
+      <view v-if="historyList.length === 0" class="empty-text">暂无记录</view>
     </view>
   </view>
 </view>
-
 </template>
 
 <script>
@@ -66,97 +62,122 @@ export default createPage(pageDef);
 <style>
 .container {
   min-height: 100vh;
-  background: #f7f8fa;
-  padding: 20rpx;
-  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  padding: 24rpx;
+  background: var(--bg-page);
 }
 
 .tabs {
   display: flex;
-  background: #fff;
-  border-radius: 12rpx;
-  margin-bottom: 20rpx;
-  overflow: hidden;
+  gap: 16rpx;
+  margin-bottom: 24rpx;
 }
 
 .tab-item {
   flex: 1;
   text-align: center;
-  padding: 24rpx 0;
-  font-size: 28rpx;
-  color: #666;
+  padding: 16rpx 0;
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  background: #e9eff6;
+  border-radius: 999rpx;
 }
 
 .tab-item.active {
   color: #fff;
-  background: #409EFF;
-  font-weight: bold;
+  background: var(--primary-color);
+  font-weight: 600;
 }
 
 .form-card {
-  padding: 30rpx;
+  margin-bottom: 0;
 }
 
 .form-item {
-  margin-bottom: 30rpx;
+  margin-bottom: 24rpx;
 }
 
 .label {
   display: block;
-  font-size: 28rpx;
-  color: #333;
+  font-size: 24rpx;
+  color: var(--text-secondary);
   margin-bottom: 12rpx;
 }
 
-.input {
-  border: 1rpx solid #ddd;
-  border-radius: 8rpx;
-  padding: 16rpx;
-  font-size: 28rpx;
+.submit-btn {
+  margin-top: 12rpx;
 }
 
-.submit-btn {
-  margin-top: 40rpx;
-  width: 100%;
+.refresh-btn {
+  margin-bottom: 20rpx;
+  border-radius: 999rpx;
+  border: 2rpx solid #c8dbed;
+  color: var(--primary-color);
+  background: #edf4fb;
+}
+
+.refresh-btn::after {
+  border: none;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
 }
 
 .history-item {
-  padding: 24rpx;
-  margin-bottom: 20rpx;
+  margin-bottom: 0;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10rpx;
+  margin-bottom: 16rpx;
 }
 
 .name {
   font-size: 30rpx;
-  font-weight: bold;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .sub {
   font-size: 24rpx;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .reason {
   font-size: 26rpx;
-  color: #333;
-  margin-top: 10rpx;
-  padding-top: 10rpx;
-  border-top: 1rpx dashed #eee;
+  color: var(--text-primary);
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 2rpx dashed var(--border-color);
+}
+
+.status {
+  font-size: 22rpx;
+  border-radius: 999rpx;
+  padding: 4rpx 16rpx;
+}
+
+.status-0 {
+  background: #fff8e8;
+  color: #a36a00;
+}
+
+.status-1 {
+  background: #e9f8f2;
+  color: #1f9d72;
+}
+
+.status-2 {
+  background: #fff1f1;
+  color: #c74545;
 }
 
 .empty-text {
   text-align: center;
-  color: #999;
-  margin-top: 50rpx;
+  color: var(--text-tertiary);
+  padding: 48rpx 0;
 }
-
-.refresh-btn {
-    margin-bottom: 20rpx;
-}
-
 </style>

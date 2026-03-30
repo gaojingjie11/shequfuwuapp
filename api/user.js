@@ -1,5 +1,42 @@
-import request from '../utils/request';
+import request, { BASE_URL } from '../utils/request';
 
+function registerFace(filePath) {
+    return new Promise((resolve, reject) => {
+        const token = uni.getStorageSync('token');
+        const header = {};
+        if (token) {
+            header.Authorization = `Bearer ${token}`;
+        }
+
+        uni.uploadFile({
+            url: `${BASE_URL}/user/face/register`,
+            filePath,
+            name: 'file',
+            header,
+            success: (res) => {
+                let data = {};
+                try {
+                    data = JSON.parse(res.data || '{}');
+                } catch (e) {
+                    reject(new Error('人脸录入响应解析失败'));
+                    return;
+                }
+
+                if (res.statusCode >= 200 && res.statusCode < 300 && data.code === 200) {
+                    resolve(data.data);
+                    return;
+                }
+
+                if (data.code === 401 || res.statusCode === 401) {
+                    uni.removeStorageSync('token');
+                    uni.redirectTo({ url: '/pages/auth/login' });
+                }
+                reject(new Error(data.msg || '人脸录入失败'));
+            },
+            fail: (err) => reject(err || new Error('人脸录入失败'))
+        });
+    });
+}
 
 export default {
     getUserInfo() {
@@ -23,5 +60,7 @@ export default {
             method: 'POST',
             data
         });
-    }
+    },
+
+    registerFace
 };

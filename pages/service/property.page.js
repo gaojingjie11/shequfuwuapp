@@ -7,11 +7,32 @@ import __dep5 from '../../utils/payment';
 const { getPropertyFeeList, payPropertyFee } = __dep1;
 const { getUserInfo } = __dep2;
 const { formatTime } = __dep3;
-const { confirmAction, promptPaymentPassword } = __dep4;
+const { confirmAction, promptPaymentAuth } = __dep4;
 const { GREEN_POINTS_PER_YUAN, getMixedPaymentPreview } = __dep5;
 
 function formatAmount(value) {
     return Number(value || 0).toFixed(2);
+}
+
+function wait(ms) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+}
+
+function createPayWaitMs() {
+    return 3000 + Math.floor(Math.random() * 2001);
+}
+
+function normalizePayErrorMessage(err) {
+    const text = String(err?.msg || err?.message || err?.data?.msg || '').trim();
+    if (!text) return '支付失败，请稍后重试';
+    if (/invalid payment password/i.test(text)) return '支付密码错误，请重试';
+    if (/payment password is required/i.test(text)) return '请输入支付密码后再试';
+    if (/face image is required/i.test(text)) return '未获取到人脸图片，请重试';
+    if (/payment failed:/i.test(text)) return `支付失败：${text.replace(/^payment failed:\s*/i, '')}`;
+    if (/payment failed/i.test(text)) return '支付失败，请重试';
+    return text;
 }
 
 export default {
@@ -125,25 +146,47 @@ export default {
         );
         if (!confirmed) return;
 
-        const password = await promptPaymentPassword({
-            title: '物业费支付',
-            placeholder: '请输入登录密码'
+        const authPayload = await promptPaymentAuth({
+            title: '物业费支付验证',
+            passwordPlaceholder: '请输入登录密码',
+            faceRegistered: !!(this.data.userInfo && this.data.userInfo.face_registered)
         });
-        if (!password) {
-            uni.showToast({ title: '已取消支付', icon: 'none' });
+
+        if (!authPayload) {
             return;
         }
 
+        uni.showLoading({ title: '正在支付...', mask: true });
+        let paymentResult = null;
         try {
-            const result = await payPropertyFee({ related_id: id, password });
+            const [result] = await Promise.all([
+                payPropertyFee({
+                    related_id: id,
+                    business_type: 2,
+                    ...authPayload
+                }),
+                wait(createPayWaitMs())
+            ]);
+            paymentResult = result && result.payment_result ? result.payment_result : result;
+        } catch (err) {
+            uni.hideLoading();
             uni.showToast({
-                title: `支付成功 积分${Number(result.used_points || 0)} 余额￥${formatAmount(result.used_balance || 0)}`,
+                title: normalizePayErrorMessage(err),
                 icon: 'none'
             });
+            return;
+        }
+
+        uni.hideLoading();
+        uni.showToast({
+            title: `支付成功 积分${Number(paymentResult.used_points || 0)} 余额￥${formatAmount(paymentResult.used_balance || 0)}`,
+            icon: 'none'
+        });
+        try {
             await this.refreshUserInfo();
             await this.getList(true);
         } catch (err) {
-            // 错误提示由 request.js 统一处理
+            console.error(err);
         }
     }
 };

@@ -22,7 +22,13 @@ export default {
 
     async fetchUserInfo() {
         const token = uni.getStorageSync('token');
-        if (!token) return;
+        if (!token) {
+            this.setData({
+                userInfo: null,
+                showAIReportEntry: false
+            });
+            return;
+        }
 
         try {
             const res = await getUserInfo();
@@ -44,7 +50,9 @@ export default {
                 if (!res.confirm) return;
                 try {
                     await logout();
-                } catch (e) {}
+                } catch (e) {
+                    // ignore
+                }
 
                 uni.removeStorageSync('token');
                 this.setData({

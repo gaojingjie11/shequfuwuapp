@@ -1,5 +1,5 @@
 <template>
-<view class="page">
+<view class="page page-shell">
   <view v-if="loading" class="state-tip">加载中...</view>
 
   <view v-if="!loading && report" class="content">
@@ -22,7 +22,6 @@
 
   <view v-if="!loading && !report" class="state-tip">未找到报表</view>
 </view>
-
 </template>
 
 <script>
@@ -35,9 +34,8 @@ export default createPage(pageDef);
 <style>
 .page {
   min-height: 100vh;
-  background: #f7f8fa;
-  padding: 32rpx;
-  padding-bottom: calc(32rpx + env(safe-area-inset-bottom));
+  background: var(--bg-page);
+  padding: 24rpx;
 }
 
 .meta {
@@ -49,6 +47,7 @@ export default createPage(pageDef);
   padding: 16rpx 0;
   border-bottom: 2rpx solid #f1f1f1;
   font-size: 28rpx;
+  color: var(--text-primary);
 }
 
 .meta-row:last-child {
@@ -57,13 +56,14 @@ export default createPage(pageDef);
 
 .label {
   width: 192rpx;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .section-title {
   font-size: 32rpx;
   font-weight: 700;
   margin-bottom: 20rpx;
+  color: var(--text-primary);
 }
 
 .report-rich {
@@ -75,7 +75,7 @@ export default createPage(pageDef);
 }
 
 .report-text {
-  color: #333;
+  color: var(--text-primary);
   font-size: 28rpx;
   line-height: 1.8;
   white-space: pre-wrap;
@@ -84,9 +84,8 @@ export default createPage(pageDef);
 
 .state-tip {
   text-align: center;
-  color: #999;
-  font-size: 26rpx;
+  color: var(--text-tertiary);
+  font-size: 24rpx;
   padding: 40rpx 0;
 }
-
 </style>

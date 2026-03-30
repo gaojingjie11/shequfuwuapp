@@ -1,15 +1,16 @@
 <template>
-<view class="community-chat-page">
+<view class="community-chat-page page-shell">
   <view class="chat-card card">
     <scroll-view
       class="chat-list"
       scroll-y="true"
       :scroll-into-view="lastMessageId"
+      :scroll-top="scrollTop"
     >
       <view v-if="loading" class="state-text">加载中...</view>
       <view v-if="!loading && messages.length === 0" class="state-text">暂无消息，来发第一条吧</view>
 
-      <template v-for="(item, index) in messages" :key="item.id">
+      <template v-for="item in messages" :key="item.id">
         <view :id="item.viewId" :class="'message-item ' + (item.isSelf ? 'is-self' : '')">
           <image class="avatar" :src="item.avatar || defaultAvatar" mode="aspectFill"></image>
           <view class="bubble-wrap">
@@ -21,6 +22,7 @@
           </view>
         </view>
       </template>
+      <view id="chat-bottom-anchor" class="bottom-anchor"></view>
     </scroll-view>
 
     <view class="composer">
@@ -33,7 +35,7 @@
         @input="onDraftInput"
       />
       <view class="composer-actions">
-        <text class="hint">支持最多 1000 字</text>
+        <text class="hint">最多支持 1000 字</text>
         <button
           class="btn btn-primary send-btn"
           size="mini"
@@ -47,7 +49,6 @@
     </view>
   </view>
 </view>
-
 </template>
 
 <script>
@@ -60,14 +61,13 @@ export default createPage(pageDef);
 <style>
 .community-chat-page {
   min-height: 100vh;
-  background: #f7f8fa;
-  padding: 20rpx;
-  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  background: var(--bg-page);
+  padding: 24rpx;
   box-sizing: border-box;
 }
 
 .chat-card {
-  min-height: calc(100vh - 40rpx);
+  height: calc(100vh - 48rpx);
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -76,22 +76,24 @@ export default createPage(pageDef);
 
 .chat-list {
   flex: 1;
-  padding: 20rpx;
+  min-height: 0;
+  padding: 24rpx;
   box-sizing: border-box;
+  background: #f8fbff;
 }
 
 .state-text {
   text-align: center;
-  color: #999;
-  font-size: 24rpx;
-  padding: 30rpx 0;
+  color: var(--text-tertiary);
+  font-size: 26rpx;
+  padding: 48rpx 0;
 }
 
 .message-item {
   display: flex;
   align-items: flex-start;
-  gap: 14rpx;
-  margin-bottom: 20rpx;
+  gap: 16rpx;
+  margin-bottom: 24rpx;
 }
 
 .message-item.is-self {
@@ -102,7 +104,7 @@ export default createPage(pageDef);
   width: 60rpx;
   height: 60rpx;
   border-radius: 50%;
-  background: #f2f2f2;
+  background: #e2edf8;
 }
 
 .bubble-wrap {
@@ -120,75 +122,77 @@ export default createPage(pageDef);
 .meta {
   display: flex;
   align-items: center;
-  gap: 12rpx;
-  margin-bottom: 6rpx;
+  gap: 16rpx;
+  margin-bottom: 8rpx;
 }
 
 .name {
   font-size: 24rpx;
-  color: #333;
+  color: var(--text-primary);
   font-weight: 600;
 }
 
 .time {
-  font-size: 20rpx;
-  color: #999;
+  font-size: 22rpx;
+  color: var(--text-tertiary);
 }
 
 .bubble {
-  max-width: 76%;
-  background: #f2f4f7;
-  color: #333;
-  border-radius: 14rpx;
-  border-top-left-radius: 6rpx;
-  padding: 14rpx 18rpx;
-  font-size: 26rpx;
+  max-width: 78%;
+  background: #fff;
+  color: var(--text-primary);
+  border: 2rpx solid var(--border-color);
+  border-radius: 24rpx;
+  padding: 18rpx 24rpx;
+  font-size: 28rpx;
   line-height: 1.6;
-  word-break: break-all;
   white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .message-item.is-self .bubble {
-  background: linear-gradient(135deg, #3a8bff, #66b1ff);
+  background: linear-gradient(135deg, #47719b 0%, #2d597b 100%);
+  border-color: transparent;
   color: #fff;
-  border-top-left-radius: 14rpx;
-  border-top-right-radius: 6rpx;
 }
 
 .composer {
-  border-top: 1rpx solid #f0f0f0;
-  padding: 16rpx 16rpx calc(16rpx + env(safe-area-inset-bottom));
+  border-top: 2rpx solid var(--border-color);
+  padding: 20rpx;
   background: #fff;
+  position: relative;
+  z-index: 2;
 }
 
 .composer-input {
   width: 100%;
-  min-height: 120rpx;
-  max-height: 260rpx;
-  border: 1rpx solid #e5e6eb;
-  border-radius: 12rpx;
-  padding: 14rpx;
-  box-sizing: border-box;
-  background: #fafafa;
-  font-size: 26rpx;
+  min-height: 140rpx;
+  background: #f7fafc;
+  border: 2rpx solid var(--border-color);
+  border-radius: 24rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: var(--text-primary);
 }
 
 .composer-actions {
-  margin-top: 12rpx;
+  margin-top: 16rpx;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .hint {
   font-size: 22rpx;
-  color: #999;
+  color: var(--text-tertiary);
 }
 
 .send-btn {
+  min-width: 168rpx;
   margin: 0;
-  min-width: 120rpx;
 }
 
-
+.bottom-anchor {
+  height: 4rpx;
+}
 </style>

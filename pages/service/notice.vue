@@ -1,28 +1,35 @@
 <template>
-<view class="notice-page">
-  <view class="notice-list">
-    <template v-for="(item, index) in notices" :key="item.id">
-      <view class="notice-card card">
-        <view class="notice-header">
+<view class="notice-page page-shell">
+  <view class="container">
+    <view class="notice-head card">
+      <view class="notice-title-main">社区公告</view>
+      <view class="notice-subtitle">政策通知与社区动态</view>
+    </view>
+
+    <view class="notice-list">
+      <template v-for="item in notices" :key="item.id">
+        <view class="notice-card card">
+          <view class="notice-header">
+            <view class="notice-tag">公告</view>
+            <view class="notice-meta">
+              <text class="publisher">{{item.publisher}}</text>
+              <text class="date">{{item.created_at}}</text>
+            </view>
+          </view>
           <view class="notice-title">{{item.title}}</view>
-          <view class="notice-meta">
-            <text class="publisher">{{item.publisher}}</text>
-            <text class="date">{{item.created_at}}</text>
+          <view class="notice-content">{{item.content}}</view>
+          <view class="notice-footer">
+            <text class="views">👀 {{item.view_count || 0}} 次浏览</text>
           </view>
         </view>
-        <view class="notice-content">{{item.content}}</view>
-        <view class="notice-footer">
-          <text class="views">👁 {{item.view_count || 0}} 次浏览</text>
-        </view>
-      </view>
-    </template>
+      </template>
+    </view>
+
+    <view v-if="loading" class="loading-text">加载中...</view>
+    <view v-if="!loading && notices.length === 0" class="empty-state card">暂无公告</view>
+    <view v-if="!loading && notices.length > 0 && notices.length >= total" class="no-more">没有更多了</view>
   </view>
-
-  <view v-if="loading" class="loading-text">加载中...</view>
-  <view v-if="!loading && notices.length === 0" class="empty-state">暂无公告</view>
-  <view v-if="!loading && notices.length > 0 && notices.length >= total" class="no-more">没有更多了</view>
 </view>
-
 </template>
 
 <script>
@@ -33,63 +40,88 @@ export default createPage(pageDef);
 </script>
 
 <style>
-/* pages/service/notice.wxss */
 .notice-page {
   min-height: 100vh;
-  background: #f7f8fa;
-  padding: 32rpx;
-  padding-bottom: calc(32rpx + env(safe-area-inset-bottom));
+  padding: 24rpx 0 36rpx;
+}
+
+.notice-head {
+  margin-bottom: 24rpx;
+  background: linear-gradient(135deg, #f5faff 0%, #edf4fb 100%);
+}
+
+.notice-title-main {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.notice-subtitle {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.notice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
 }
 
 .notice-card {
-  background: #fff;
-  border-radius: 24rpx;
-  padding: 40rpx;
-  margin-bottom: 32rpx;
+  margin-bottom: 0;
 }
 
 .notice-header {
-  margin-bottom: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
 }
 
-.notice-title {
-  font-size: 36rpx;
-  font-weight: 600;
-  margin-bottom: 16rpx;
-  color: #333;
+.notice-tag {
+  display: inline-block;
+  font-size: 22rpx;
+  color: var(--primary-color);
+  background: var(--primary-soft);
+  border-radius: 999rpx;
+  padding: 4rpx 18rpx;
 }
 
 .notice-meta {
+  font-size: 22rpx;
+  color: var(--text-tertiary);
   display: flex;
-  justify-content: space-between;
-  font-size: 24rpx;
-  color: #999;
+  gap: 16rpx;
 }
 
-.publisher {
-  color: #00b894;
-  font-weight: 500;
+.notice-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  margin-bottom: 16rpx;
+  color: var(--text-primary);
 }
 
 .notice-content {
   font-size: 28rpx;
-  color: #666;
-  line-height: 1.6;
-  margin-bottom: 24rpx;
+  color: var(--text-secondary);
+  line-height: 1.7;
 }
 
 .notice-footer {
-  padding-top: 24rpx;
-  border-top: 2rpx solid #f0f0f0;
-  font-size: 24rpx;
-  color: #999;
+  padding-top: 20rpx;
+  margin-top: 20rpx;
+  border-top: 2rpx dashed var(--border-color);
+  font-size: 22rpx;
+  color: var(--text-tertiary);
 }
 
-.loading-text, .no-more, .empty-state {
+.loading-text,
+.no-more,
+.empty-state {
   text-align: center;
-  padding: 40rpx;
-  color: #999;
+  padding: 36rpx;
+  color: var(--text-tertiary);
   font-size: 24rpx;
 }
-
 </style>

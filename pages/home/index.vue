@@ -1,64 +1,76 @@
 <template>
-<view class="home-page">
-  <view class="banner">
+<view class="home-page page-shell">
+  <view class="hero">
     <view class="container">
-      <view class="banner-title">欢迎来到智慧社区</view>
-      <view class="banner-subtitle">让生活更便捷、更智能、更美好</view>
+      <view class="hero-title">欢迎来到智享生活</view>
+      <view class="hero-subtitle">让服务更高效，让生活更安心</view>
+      <view class="hero-tags">
+        <text class="hero-tag">便民服务</text>
+        <text class="hero-tag">社区商城</text>
+        <text class="hero-tag">AI 助手</text>
+      </view>
     </view>
   </view>
 
-  <view class="container">
+  <view class="container home-content">
+    <view class="section-header">
+      <view class="section-title">快捷服务</view>
+      <view class="section-subtitle">常用功能一键直达</view>
+    </view>
+
     <view class="quick-menu">
-      <navigator url="/pages/mall/index" open-type="switchTab" class="quick-item">
-        <view class="quick-icon">📦</view>
+      <navigator url="/pages/mall/index" open-type="switchTab" class="quick-item card">
+        <view class="quick-icon-wrap"><view class="quick-icon">🛍</view></view>
         <view class="quick-text">社区商城</view>
       </navigator>
-      <navigator url="/pages/service/notice" class="quick-item">
-        <view class="quick-icon">📙</view>
+      <navigator url="/pages/service/notice" class="quick-item card">
+        <view class="quick-icon-wrap"><view class="quick-icon">📚</view></view>
         <view class="quick-text">公告通知</view>
       </navigator>
-      <navigator url="/pages/service/repair" class="quick-item">
-        <view class="quick-icon">🔧</view>
+      <navigator url="/pages/service/repair" class="quick-item card">
+        <view class="quick-icon-wrap"><view class="quick-icon">🛠</view></view>
         <view class="quick-text">报修投诉</view>
       </navigator>
-      <navigator url="/pages/service/visitor" class="quick-item">
-        <view class="quick-icon">👥</view>
+      <navigator url="/pages/service/visitor" class="quick-item card">
+        <view class="quick-icon-wrap"><view class="quick-icon">🪪</view></view>
         <view class="quick-text">访客登记</view>
       </navigator>
-      <navigator url="/pages/service/green-points" class="quick-item">
-        <view class="quick-icon">🏆</view>
+      <navigator url="/pages/service/green-points" class="quick-item card">
+        <view class="quick-icon-wrap"><view class="quick-icon">🌿</view></view>
         <view class="quick-text">绿色积分</view>
       </navigator>
-      <navigator url="/pages/chat/index" class="quick-item">
-        <view class="quick-icon">🤖</view>
+      <navigator url="/pages/chat/index" class="quick-item card">
+        <view class="quick-icon-wrap"><view class="quick-icon">🤖</view></view>
         <view class="quick-text">AI 对话</view>
       </navigator>
-      <navigator url="/pages/service/community-chat" class="quick-item">
-        <view class="quick-icon">💬</view>
+      <navigator url="/pages/service/community-chat" class="quick-item card">
+        <view class="quick-icon-wrap"><view class="quick-icon">💬</view></view>
         <view class="quick-text">社区群聊</view>
       </navigator>
     </view>
 
-    <view class="section">
+    <view class="section-header notice-header">
       <view class="section-title">最新公告</view>
-      <view class="notice-list">
-        <template v-for="(item, index) in notices" :key="item.id">
-          <view class="notice-item card" @tap="goToNotice" :data-id="item.id">
-            <view class="notice-title">{{item.title}}</view>
-            <view class="notice-meta">
-              <text>{{item.publisher}}</text>
-              <text>{{item.created_at}}</text>
-            </view>
+      <view class="section-subtitle">社区动态实时更新</view>
+    </view>
+
+    <view class="notice-list">
+      <template v-for="item in notices" :key="item.id">
+        <view class="notice-item card" @tap="goToNotice" :data-id="item.id">
+          <view class="notice-tag">公告</view>
+          <view class="notice-title">{{item.title}}</view>
+          <view class="notice-meta">
+            <text>{{item.publisher}}</text>
+            <text>{{item.created_at}}</text>
           </view>
-        </template>
-        <view v-if="notices.length === 0" class="empty-state">
-          <text>暂无公告</text>
         </view>
+      </template>
+      <view v-if="notices.length === 0" class="empty-state card">
+        <text>暂无公告</text>
       </view>
     </view>
   </view>
 </view>
-
 </template>
 
 <script>
@@ -69,117 +81,173 @@ export default createPage(pageDef);
 </script>
 
 <style>
-/* pages/home/index.wxss */
 .home-page {
   min-height: 100vh;
-  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
-  background: #f5f7fb;
 }
 
-.banner {
-  background: linear-gradient(135deg, #00b894 0%, #0984e3 100%);
-  color: #fff;
-  padding: 56rpx 0;
-  margin-bottom: 24rpx;
+.hero {
   position: relative;
+  padding: 68rpx 0 56rpx;
+  background: linear-gradient(135deg, #2d597b 0%, #276193 58%, #3e78a8 100%);
+  color: #fff;
   overflow: hidden;
-  border-bottom-left-radius: 28rpx;
-  border-bottom-right-radius: 28rpx;
 }
 
-.banner::after {
-  content: '';
+.hero::before {
+  content: "";
   position: absolute;
-  right: -80rpx;
-  top: -90rpx;
-  width: 280rpx;
-  height: 280rpx;
+  width: 440rpx;
+  height: 440rpx;
   border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  top: -180rpx;
+  right: -60rpx;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 320rpx;
+  height: 320rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  bottom: -160rpx;
+  left: -80rpx;
+}
+
+.hero-title,
+.hero-subtitle,
+.hero-tags {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title {
+  font-size: 54rpx;
+  font-weight: 700;
+  letter-spacing: 1rpx;
+}
+
+.hero-subtitle {
+  margin-top: 16rpx;
+  font-size: 28rpx;
+  opacity: 0.92;
+}
+
+.hero-tags {
+  margin-top: 24rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.hero-tag {
+  padding: 8rpx 24rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.28);
   background: rgba(255, 255, 255, 0.12);
 }
 
-.banner-title {
-  font-size: 54rpx;
+.home-content {
+  margin-top: -24rpx;
+  padding-bottom: 48rpx;
+}
+
+.section-header {
+  margin: 36rpx 0 24rpx;
+}
+
+.section-title {
+  font-size: 40rpx;
   font-weight: 700;
-  margin-bottom: 10rpx;
-  text-align: center;
-  letter-spacing: 2rpx;
-  position: relative;
-  z-index: 1;
-  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.12);
+  color: var(--text-primary);
 }
 
-.banner-subtitle {
-  font-size: 28rpx;
-  text-align: center;
-  opacity: 0.9;
-  position: relative;
-  z-index: 1;
-}
-
-.container {
-  padding: 0 24rpx;
+.section-subtitle {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: var(--text-secondary);
 }
 
 .quick-menu {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20rpx;
-  margin-bottom: 28rpx;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24rpx;
 }
 
 .quick-item {
-  background: #fff;
-  border-radius: 22rpx;
-  min-height: 212rpx;
-  padding: 28rpx 16rpx;
+  margin-bottom: 0;
   text-align: center;
-  box-shadow: 0 10rpx 28rpx rgba(0, 0, 0, 0.05);
+  padding: 36rpx 24rpx;
+}
+
+.quick-icon-wrap {
+  width: 104rpx;
+  height: 104rpx;
+  margin: 0 auto 20rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef5fc;
 }
 
 .quick-icon {
-  font-size: 56rpx;
-  margin-bottom: 14rpx;
+  font-size: 48rpx;
 }
 
 .quick-text {
-  font-size: 34rpx;
-  font-weight: 500;
-  color: #2d3436;
-  line-height: 1.35;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
-.section-title {
-  font-size: 36rpx;
-  font-weight: 600;
-  margin-bottom: 16rpx;
-  padding-left: 14rpx;
-  border-left: 8rpx solid #00b894;
+.notice-header {
+  margin-top: 48rpx;
 }
 
 .notice-list {
   display: flex;
   flex-direction: column;
+  gap: 24rpx;
 }
 
 .notice-item {
-  padding: 24rpx;
-  border-radius: 20rpx;
-  margin-bottom: 14rpx;
+  margin-bottom: 0;
+}
+
+.notice-tag {
+  display: inline-block;
+  margin-bottom: 16rpx;
+  padding: 4rpx 20rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  color: var(--primary-color);
+  background: var(--primary-soft);
 }
 
 .notice-title {
   font-size: 32rpx;
-  font-weight: 500;
-  margin-bottom: 10rpx;
-  color: #2d3436;
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.5;
 }
 
 .notice-meta {
+  margin-top: 24rpx;
+  padding-top: 20rpx;
+  border-top: 2rpx dashed var(--border-color);
   display: flex;
   justify-content: space-between;
-  font-size: 24rpx;
-  color: #636e72;
+  font-size: 22rpx;
+  color: var(--text-tertiary);
 }
 
+.empty-state {
+  margin-bottom: 0;
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 36rpx 0;
+}
 </style>

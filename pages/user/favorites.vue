@@ -1,11 +1,11 @@
 <template>
-<view class="container">
+<view class="container page-shell">
   <view class="product-list" v-if="products.length > 0">
     <view class="product-item card" @tap="goToDetail" :data-id="item.id" v-for="(item, index) in products" :key="item.id">
       <image class="product-img" :src="item.image_url" mode="aspectFill"></image>
       <view class="product-info">
         <view class="product-name">{{item.name}}</view>
-        <view class="product-price">¥{{item.price}}</view>
+        <view class="product-price">￥{{item.price}}</view>
         <view class="action-row">
             <view class="delete-btn" @tap.stop="removeFavorite" :data-id="item.id" :data-index="index">取消收藏</view>
         </view>
@@ -18,7 +18,6 @@
     <view class="empty-text">暂无收藏商品</view>
   </view>
 </view>
-
 </template>
 
 <script>
@@ -31,22 +30,28 @@ export default createPage(pageDef);
 <style>
 .container {
   min-height: 100vh;
-  background: #f7f8fa;
-  padding: 20rpx;
-  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  padding: 24rpx;
+  background: var(--bg-page);
+}
+
+.product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
 }
 
 .product-item {
+  margin-bottom: 0;
   display: flex;
-  padding: 20rpx;
-  margin-bottom: 20rpx;
+  padding: 24rpx;
 }
 
 .product-img {
-  width: 160rpx;
-  height: 160rpx;
-  border-radius: 8rpx;
+  width: 172rpx;
+  height: 172rpx;
+  border-radius: 20rpx;
   margin-right: 20rpx;
+  background: #e8eef5;
 }
 
 .product-info {
@@ -58,14 +63,14 @@ export default createPage(pageDef);
 
 .product-name {
   font-size: 30rpx;
-  font-weight: 500;
-  color: #333;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .product-price {
-  font-size: 32rpx;
-  color: #ff4d4f;
-  font-weight: bold;
+  font-size: 36rpx;
+  color: #c74545;
+  font-weight: 700;
 }
 
 .action-row {
@@ -74,15 +79,16 @@ export default createPage(pageDef);
 }
 
 .delete-btn {
-  font-size: 24rpx;
-  color: #999;
-  padding: 8rpx 16rpx;
-  border: 1rpx solid #eee;
-  border-radius: 20rpx;
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  padding: 6rpx 20rpx;
+  border: 2rpx solid var(--border-strong);
+  border-radius: 999rpx;
+  background: #f7fafc;
 }
 
 .empty-state {
-  padding-top: 200rpx;
+  padding-top: 180rpx;
   text-align: center;
 }
 
@@ -90,11 +96,11 @@ export default createPage(pageDef);
   width: 200rpx;
   height: 200rpx;
   margin-bottom: 20rpx;
+  opacity: 0.72;
 }
 
 .empty-text {
-  color: #999;
+  color: var(--text-tertiary);
   font-size: 28rpx;
 }
-
 </style>

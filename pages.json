@@ -23,7 +23,7 @@
     {
       "path": "pages/service/community-chat",
       "style": {
-        "navigationBarTitleText": "\u793e\u533a\u7fa4\u804a",
+        "navigationBarTitleText": "社区群聊",
         "enablePullDownRefresh": true
       }
     },
@@ -38,31 +38,31 @@
     {
       "path": "pages/service/visitor",
       "style": {
-        "navigationBarTitleText": "\u8bbf\u5ba2\u767b\u8bb0"
+        "navigationBarTitleText": "访客登记"
       }
     },
     {
       "path": "pages/service/parking",
       "style": {
-        "navigationBarTitleText": "\u8f66\u4f4d\u7ba1\u7406"
+        "navigationBarTitleText": "车位管理"
       }
     },
     {
       "path": "pages/service/property",
       "style": {
-        "navigationBarTitleText": "\u7269\u4e1a\u8d39\u7f34\u7eb3"
+        "navigationBarTitleText": "物业费缴纳"
       }
     },
     {
       "path": "pages/service/green-points",
       "style": {
-        "navigationBarTitleText": "\u7eff\u8272\u79ef\u5206\u4e2d\u5fc3"
+        "navigationBarTitleText": "绿色积分中心"
       }
     },
     {
       "path": "pages/chat/index",
       "style": {
-        "navigationBarTitleText": "AI \u5bf9\u8bdd\u52a9\u624b"
+        "navigationBarTitleText": "AI 对话助手"
       }
     },
     {
@@ -82,6 +82,12 @@
       "style": {}
     },
     {
+      "path": "pages/user/face-register",
+      "style": {
+        "navigationBarTitleText": "人脸录入"
+      }
+    },
+    {
       "path": "pages/auth/login",
       "style": {}
     },
@@ -92,56 +98,56 @@
     {
       "path": "pages/user/favorites",
       "style": {
-        "navigationBarTitleText": "\u6211\u7684\u6536\u85cf",
+        "navigationBarTitleText": "我的收藏",
         "usingComponents": {}
       }
     },
     {
       "path": "pages/admin/ai-report/index",
       "style": {
-        "navigationBarTitleText": "AI\u62a5\u8868"
+        "navigationBarTitleText": "AI报表"
       }
     },
     {
       "path": "pages/admin/ai-report/detail",
       "style": {
-        "navigationBarTitleText": "\u62a5\u8868\u8be6\u60c5"
+        "navigationBarTitleText": "报表详情"
       }
     }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "\u667a\u6167\u793e\u533a",
-    "navigationBarBackgroundColor": "#fff",
-    "backgroundColor": "#F8F8F8"
+    "navigationBarTitleText": "智享生活",
+    "navigationBarBackgroundColor": "#f8fbff",
+    "backgroundColor": "#F4F7FB"
   },
   "tabBar": {
-    "color": "#999999",
-    "selectedColor": "#409EFF",
-    "backgroundColor": "#ffffff",
+    "color": "#7a869a",
+    "selectedColor": "#2d597b",
+    "backgroundColor": "#fdfefe",
     "borderStyle": "black",
     "list": [
       {
         "pagePath": "pages/home/index",
-        "text": "\u9996\u9875",
+        "text": "首页",
         "iconPath": "static/tabbar/home.png",
         "selectedIconPath": "static/tabbar/home-active.png"
       },
       {
         "pagePath": "pages/mall/index",
-        "text": "\u5546\u57ce",
+        "text": "商城",
         "iconPath": "static/tabbar/mall.png",
         "selectedIconPath": "static/tabbar/mall-active.png"
       },
       {
         "pagePath": "pages/service/index",
-        "text": "\u670d\u52a1",
+        "text": "服务",
         "iconPath": "static/tabbar/service.png",
         "selectedIconPath": "static/tabbar/service-active.png"
       },
       {
         "pagePath": "pages/user/index",
-        "text": "\u6211\u7684",
+        "text": "我的",
         "iconPath": "static/tabbar/user.png",
         "selectedIconPath": "static/tabbar/user-active.png"
       }

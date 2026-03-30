@@ -12,38 +12,50 @@ export default {
 </script>
 
 <style>
-/* Global theme tokens */
 page {
-  --primary-color: #00b894;
-  --primary-light: #55efc4;
-  --primary-dark: #00997a;
+  --primary-color: #2d597b;
+  --primary-light: #47719b;
+  --primary-dark: #224560;
+  --primary-soft: #edf4fb;
 
-  --secondary-color: #0984e3;
-  --secondary-light: #74b9ff;
+  --secondary-color: #276193;
+  --secondary-light: #e8f1fb;
 
-  --success-color: #00b894;
-  --warning-color: #fdcb6e;
-  --danger-color: #ff7675;
-  --info-color: #74b9ff;
+  --success-color: #1f9d72;
+  --warning-color: #d08700;
+  --danger-color: #d94848;
+  --info-color: #2f80ed;
 
-  --text-primary: #2d3436;
-  --text-secondary: #636e72;
-  --text-light: #b2bec3;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
   --text-white: #ffffff;
 
-  --bg-color: #f7f8fa;
-  --bg-white: #ffffff;
-  --bg-gray: #f1f3f5;
+  --bg-page: #f4f7fb;
+  --bg-card: #ffffff;
+  --bg-muted: #eef3f8;
 
-  --border-color: #e9ecef;
-  --border-radius: 24rpx;
-  --border-radius-sm: 16rpx;
-  --shadow-sm: 0 8rpx 24rpx rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 12rpx 36rpx rgba(0, 0, 0, 0.1);
+  --border-color: #e3eaf2;
+  --border-strong: #d1dbe7;
 
-  color: #2d3436;
-  background-color: #f7f8fa;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  --radius-xs: 16rpx;
+  --radius-sm: 24rpx;
+  --radius-md: 32rpx;
+  --radius-lg: 40rpx;
+
+  --space-xs: 12rpx;
+  --space-sm: 20rpx;
+  --space-md: 32rpx;
+  --space-lg: 44rpx;
+  --space-xl: 60rpx;
+
+  --shadow-soft: 0 8rpx 28rpx rgba(28, 56, 84, 0.08);
+  --shadow-hover: 0 18rpx 42rpx rgba(28, 56, 84, 0.12);
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 28rpx;
+  color: var(--text-primary);
+  background: var(--bg-page);
   line-height: 1.6;
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -54,27 +66,72 @@ image,
 navigator,
 input,
 button,
-textarea {
+textarea,
+scroll-view {
   box-sizing: border-box;
+}
+
+.page-shell {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8fbff 0%, #f4f7fb 40%, #f4f7fb 100%);
 }
 
 .container {
   box-sizing: border-box;
   width: 100%;
+  padding: 0 var(--space-md);
 }
 
 .card {
-  background: #ffffff;
-  border-radius: 24rpx;
-  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.06);
-  padding: 24rpx;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 2rpx solid var(--border-color);
+  box-shadow: var(--shadow-soft);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rpx 20rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+}
+
+.badge-primary {
+  color: var(--primary-color);
+  background: var(--primary-soft);
+}
+
+.badge-success {
+  color: var(--success-color);
+  background: #e9f8f2;
+}
+
+.badge-warning {
+  color: var(--warning-color);
+  background: #fff8e8;
+}
+
+.badge-danger {
+  color: var(--danger-color);
+  background: #ffefef;
 }
 
 .btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 16rpx;
+  gap: 12rpx;
+  min-height: 84rpx;
+  padding: 0 32rpx;
+  border-radius: var(--radius-sm);
+  font-size: 28rpx;
+  font-weight: 600;
+  border: 2rpx solid transparent;
 }
 
 .btn::after {
@@ -82,17 +139,55 @@ textarea {
 }
 
 .btn-primary {
-  background: #00b894;
-  color: #fff;
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+  color: var(--text-white);
+}
+
+.btn-secondary {
+  background: #eef3f8;
+  color: var(--primary-color);
+  border-color: #d6e1ec;
+}
+
+.btn-danger {
+  background: #fff1f1;
+  color: var(--danger-color);
+  border-color: #ffd8d8;
+}
+
+.btn-lg {
+  width: 100%;
 }
 
 .input {
   width: 100%;
   min-height: 88rpx;
-  padding: 0 24rpx;
-  border: 2rpx solid #e9ecef;
-  border-radius: 16rpx;
-  background: #fff;
+  padding: 20rpx 24rpx;
+  border: 2rpx solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: #f9fbfd;
+  font-size: 28rpx;
+  color: var(--text-primary);
+}
+
+.title-1 {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.title-2 {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.text-subtle {
+  color: var(--text-secondary);
+}
+
+.text-muted {
+  color: var(--text-tertiary);
 }
 
 .safe-bottom {
