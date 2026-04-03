@@ -2,6 +2,19 @@ function getErrorText(err) {
     return String(err?.errMsg || err?.message || '').toLowerCase();
 }
 
+function isNativeApp() {
+    return typeof plus !== 'undefined';
+}
+
+function isAndroidApp() {
+    if (!isNativeApp() || !plus.android) {
+        return false;
+    }
+
+    const platform = (uni.getSystemInfoSync?.().platform || '').toLowerCase();
+    return platform === 'android';
+}
+
 function isUserCancelError(err) {
     const text = getErrorText(err);
     return text.includes('cancel');
@@ -12,21 +25,15 @@ function isPermissionDeniedError(err) {
     return text.includes('permission') || text.includes('auth') || text.includes('deny');
 }
 
-function ensureAppCameraPermission() {
+function requestAndroidPermissions(permissions = []) {
     return new Promise((resolve) => {
-        if (typeof plus === 'undefined' || !plus.android) {
-            resolve(true);
-            return;
-        }
-
-        const platform = (uni.getSystemInfoSync?.().platform || '').toLowerCase();
-        if (platform !== 'android') {
+        if (!isAndroidApp() || !permissions.length) {
             resolve(true);
             return;
         }
 
         plus.android.requestPermissions(
-            ['android.permission.CAMERA'],
+            Array.from(new Set(permissions)),
             (result) => {
                 const denied = [...(result.deniedAlways || []), ...(result.deniedPresent || [])];
                 resolve(denied.length === 0);
@@ -34,6 +41,21 @@ function ensureAppCameraPermission() {
             () => resolve(false)
         );
     });
+}
+
+function ensureAppMediaPermission(sourceType = []) {
+    const permissionList = [];
+
+    if (sourceType.includes('camera')) {
+        permissionList.push('android.permission.CAMERA');
+    }
+
+    if (sourceType.includes('album')) {
+        permissionList.push('android.permission.READ_MEDIA_IMAGES');
+        permissionList.push('android.permission.READ_EXTERNAL_STORAGE');
+    }
+
+    return requestAndroidPermissions(permissionList);
 }
 
 async function chooseSingleImage(options = {}) {
@@ -44,11 +66,12 @@ async function chooseSingleImage(options = {}) {
         ? options.sizeType
         : ['compressed'];
 
-    if (sourceType.includes('camera')) {
-        const granted = await ensureAppCameraPermission();
-        if (!granted) {
-            throw new Error('未获得摄像头权限，请在系统设置中允许相机访问');
-        }
+    const granted = await ensureAppMediaPermission(sourceType);
+    if (!granted) {
+        const permissionLabel = sourceType.includes('camera') && sourceType.includes('album')
+            ? '相机和相册'
+            : (sourceType.includes('camera') ? '相机' : '相册');
+        throw new Error(`未获得${permissionLabel}权限，请在系统设置中开启后重试`);
     }
 
     return new Promise((resolve, reject) => {
@@ -63,7 +86,7 @@ async function chooseSingleImage(options = {}) {
             resolve(filePath);
         };
 
-        const chooseImageFallback = () => {
+        const chooseImage = () => {
             uni.chooseImage({
                 count: 1,
                 sourceType,
@@ -73,19 +96,19 @@ async function chooseSingleImage(options = {}) {
             });
         };
 
-        if (typeof uni.chooseMedia === 'function') {
-            uni.chooseMedia({
-                count: 1,
-                mediaType: ['image'],
-                sourceType,
-                sizeType,
-                success: normalizeSuccess,
-                fail: chooseImageFallback
-            });
+        if (isNativeApp() || typeof uni.chooseMedia !== 'function') {
+            chooseImage();
             return;
         }
 
-        chooseImageFallback();
+        uni.chooseMedia({
+            count: 1,
+            mediaType: ['image'],
+            sourceType,
+            sizeType,
+            success: normalizeSuccess,
+            fail: () => chooseImage()
+        });
     });
 }
 
@@ -108,7 +131,7 @@ function compressImage(filePath, quality = 70) {
 const mediaUtils = {
     chooseSingleImage,
     compressImage,
-    ensureAppCameraPermission,
+    ensureAppMediaPermission,
     isPermissionDeniedError,
     isUserCancelError
 };
@@ -116,7 +139,7 @@ const mediaUtils = {
 export {
     chooseSingleImage,
     compressImage,
-    ensureAppCameraPermission,
+    ensureAppMediaPermission,
     isPermissionDeniedError,
     isUserCancelError
 };
